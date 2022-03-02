@@ -1,38 +1,35 @@
- const a = 5;
+const loginForm = document.querySelector("#login-form");
+const loginInput = document.querySelector("#login-form input");
+const greeting = document.querySelector("#greeting");
 
- console.log(a + 1);
- console.log(a * 2);
- console.log(a / 3);
+const HIDDEN_CLASSNAME = "hidden";
+const USERNAME_KEY = "username";
 
+function onLoginSubmit(event){ // 방금 일어난 event에 대한 정보를 던져줌(first argument)
+    event.preventDefault(); //기본동작 막기
+    loginForm.classList.add(HIDDEN_CLASSNAME);
 
- function sayHello(name, age){
-    console.log("hello my name is " + name + " and I'm " + age);
- }
- 
- sayHello("kim", 24)
- sayHello("park", 2)
+    const username = loginInput.value;
+    localStorage.setItem(USERNAME_KEY, username);
 
- const calculator = {
-   add : function(a, b){
-       return a + b;
-   },
-
-   sub : function(a, b){
-       return a - b;
-   },
-
-   mul : function(a, b){
-       return a * b;
-   },
-
-   div : function(a, b){
-       return a / b;
-   },
-
-   pow : function(a, b){
-       return a ** b;
-   }
+    paintGreetings(username);
 }
 
-const x = calculator.pow(2,4);
-console.log(x);
+function paintGreetings(username){
+    greeting.innerText = `Hello ${username}`;
+    greeting.classList.remove(HIDDEN_CLASSNAME);
+    
+}
+
+const savedUserName = localStorage.getItem(USERNAME_KEY);
+
+if(savedUserName === null){
+    // show the form
+    loginForm.classList.remove(HIDDEN_CLASSNAME);
+    loginForm.addEventListener("submit", onLoginSubmit);
+    console.log(savedUserName);
+}
+else{
+    // show the greetings
+    paintGreetings(savedUserName);
+}
