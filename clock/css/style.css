@@ -1,3 +1,9 @@
 .hidden{
     display : none;
 }
+
+.body{
+    width : 100vw;
+    background-repeat : no-repeat;
+    background-size :cover;
+}
